@@ -4,7 +4,8 @@
       <p class="small-title">Mini Clinic Management</p>
       <h1>Simple appointment management for a small clinic</h1>
       <p class="hero-description">
-        Manage doctors, patients and appointments with a clean beginner-friendly Angular interface.
+        Manage doctors, patients and appointments with a clean beginner-friendly
+        Angular interface.
       </p>
       <div class="hero-actions">
         <a routerLink="/doctors" class="btn">View Doctors</a>
@@ -48,7 +49,9 @@
 
     <div class="doctor-grid" *ngIf="availableDoctors.length > 0">
       <div class="doctor-card" *ngFor="let d of availableDoctors">
-        <div class="avatar">{{ d.firstName.charAt(0) }}{{ d.lastName.charAt(0) }}</div>
+        <div class="avatar">
+          {{ d.firstName.charAt(0) }}{{ d.lastName.charAt(0) }}
+        </div>
         <h3>Dr. {{ d.firstName }} {{ d.lastName }}</h3>
         <p class="specialty">{{ d.specialty }}</p>
         <p>{{ d.email }}</p>
@@ -68,7 +71,9 @@
 
     <div class="doctor-grid">
       <div class="doctor-card" *ngFor="let d of doctors">
-        <div class="avatar">{{ d.firstName.charAt(0) }}{{ d.lastName.charAt(0) }}</div>
+        <div class="avatar">
+          {{ d.firstName.charAt(0) }}{{ d.lastName.charAt(0) }}
+        </div>
         <h3>Dr. {{ d.firstName }} {{ d.lastName }}</h3>
         <p class="specialty">{{ d.specialty }}</p>
         <span class="badge badge-ok" *ngIf="d.available == 1">Available</span>

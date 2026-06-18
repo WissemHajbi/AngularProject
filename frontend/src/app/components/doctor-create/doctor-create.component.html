@@ -1,1 +1,50 @@
-<div class="page"><h2>Add Doctor</h2><form><mat-form-field appearance="outline"><input matInput placeholder="first name" [(ngModel)]="d.firstName" name="firstName"></mat-form-field><mat-form-field appearance="outline"><input matInput placeholder="last name" [(ngModel)]="d.lastName" name="lastName"></mat-form-field><mat-form-field appearance="outline"><input matInput placeholder="specialty" [(ngModel)]="d.specialty" name="specialty"></mat-form-field><mat-form-field appearance="outline"><input matInput placeholder="email" [(ngModel)]="d.email" name="email"></mat-form-field><mat-form-field appearance="outline"><input matInput placeholder="phone" [(ngModel)]="d.phone" name="phone"></mat-form-field><mat-form-field appearance="outline"><input matInput type="number" placeholder="available (1 yes, 0 no)" [(ngModel)]="d.available" name="available"></mat-form-field><button mat-raised-button color="primary" type="button" (click)="addDoctor()">Add</button></form></div>
+<div class="page">
+  <h2>Add Doctor</h2>
+  <form>
+    <mat-form-field appearance="outline"
+      ><input
+        matInput
+        placeholder="first name"
+        [(ngModel)]="d.firstName"
+        name="firstName" /></mat-form-field
+    ><mat-form-field appearance="outline"
+      ><input
+        matInput
+        placeholder="last name"
+        [(ngModel)]="d.lastName"
+        name="lastName" /></mat-form-field
+    ><mat-form-field appearance="outline"
+      ><input
+        matInput
+        placeholder="specialty"
+        [(ngModel)]="d.specialty"
+        name="specialty" /></mat-form-field
+    ><mat-form-field appearance="outline"
+      ><input
+        matInput
+        placeholder="email"
+        [(ngModel)]="d.email"
+        name="email" /></mat-form-field
+    ><mat-form-field appearance="outline"
+      ><input
+        matInput
+        placeholder="phone"
+        [(ngModel)]="d.phone"
+        name="phone" /></mat-form-field
+    ><mat-form-field appearance="outline"
+      ><input
+        matInput
+        type="number"
+        placeholder="available (1 yes, 0 no)"
+        [(ngModel)]="d.available"
+        name="available" /></mat-form-field
+    ><button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="addDoctor()"
+    >
+      Add
+    </button>
+  </form>
+</div>

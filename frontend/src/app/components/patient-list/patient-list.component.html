@@ -1,1 +1,46 @@
-<div class="page"><h2>Patients List</h2><div class="search-box"><input type="number" placeholder="Search by ID" [(ngModel)]="patientId"><button (click)="getPatientById()">Search</button><button (click)="getAllPatients()">All</button></div><div *ngIf="patients.length == 0" class="empty">No patients found.</div><div class="table-container" *ngIf="patients.length > 0"><table><tr><th>ID</th><th>First Name</th><th>Last Name</th><th>CIN</th><th>Email</th><th>Phone</th><th>Address</th><th>Current Appointments</th><th>Action</th></tr><tr *ngFor="let p of patients"><td>{{ p.id }}</td><td>{{ p.firstName }}</td><td>{{ p.lastName }}</td><td>{{ p.cin }}</td><td>{{ p.email }}</td><td>{{ p.phone }}</td><td>{{ p.address }}</td><td>{{ p.appointmentsCount }}</td><td><button class="danger" *ngIf="authService.isAdmin()" (click)="deletePatient(p.id)">Delete</button></td></tr></table></div></div>
+<div class="page">
+  <h2>Patients List</h2>
+  <div class="search-box">
+    <input
+      type="number"
+      placeholder="Search by ID"
+      [(ngModel)]="patientId"
+    /><button (click)="getPatientById()">Search</button
+    ><button (click)="getAllPatients()">All</button>
+  </div>
+  <div *ngIf="patients.length == 0" class="empty">No patients found.</div>
+  <div class="table-container" *ngIf="patients.length > 0">
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>CIN</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Current Appointments</th>
+        <th>Action</th>
+      </tr>
+      <tr *ngFor="let p of patients">
+        <td>{{ p.id }}</td>
+        <td>{{ p.firstName }}</td>
+        <td>{{ p.lastName }}</td>
+        <td>{{ p.cin }}</td>
+        <td>{{ p.email }}</td>
+        <td>{{ p.phone }}</td>
+        <td>{{ p.address }}</td>
+        <td>{{ p.appointmentsCount }}</td>
+        <td>
+          <button
+            class="danger"
+            *ngIf="authService.isAdmin()"
+            (click)="deletePatient(p.id)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

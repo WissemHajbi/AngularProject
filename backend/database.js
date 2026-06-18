@@ -1,70 +1,55 @@
 // database.js
-// This file creates one simple SQLite database file and the three tables used by the project.
+// Creates one simple SQLite database file for the clinic project.
 
 const sqlite3 = require('sqlite3').verbose();
-
-// The database will be saved in backend/bike_rental.db
-const db = new sqlite3.Database('./bike_rental.db', (err) => {
-  if (err) {
-    console.error('Erreur connexion SQLite:', err.message);
-  } else {
-    console.log('Connexion SQLite réussie.');
-  }
+const db = new sqlite3.Database('./clinic.db', (err) => {
+  if (err) console.error('SQLite connection error:', err.message);
+  else console.log('SQLite connected successfully.');
 });
 
-// serialize means: execute these SQL commands one after another.
 db.serialize(() => {
-  db.run(`
-    CREATE TABLE IF NOT EXISTS velos (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      marque TEXT,
-      couleur TEXT,
-      etat INTEGER
-    )
-  `);
+  db.run(`CREATE TABLE IF NOT EXISTS doctors (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    firstName TEXT,
+    lastName TEXT,
+    specialty TEXT,
+    email TEXT,
+    phone TEXT,
+    available INTEGER
+  )`);
 
-  db.run(`
-    CREATE TABLE IF NOT EXISTS adherents (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      nom TEXT,
-      prenom TEXT,
-      cin TEXT,
-      email TEXT,
-      tel TEXT,
-      adresse TEXT,
-      nbVeloencours INTEGER DEFAULT 0
-    )
-  `);
+  db.run(`CREATE TABLE IF NOT EXISTS patients (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    firstName TEXT,
+    lastName TEXT,
+    cin TEXT,
+    email TEXT,
+    phone TEXT,
+    address TEXT,
+    appointmentsCount INTEGER DEFAULT 0
+  )`);
 
-  db.run(`
-    CREATE TABLE IF NOT EXISTS tours (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      veloId INTEGER,
-      adherentId INTEGER,
-      date_emp TEXT,
-      date_retour TEXT
-    )
-  `);
+  db.run(`CREATE TABLE IF NOT EXISTS appointments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    doctorId INTEGER,
+    patientId INTEGER,
+    appointmentDate TEXT,
+    endDate TEXT
+  )`);
 
-  // Small demo data, inserted only when tables are empty.
-  db.get('SELECT COUNT(*) AS total FROM velos', (err, row) => {
+  // Small demo data inserted only when tables are empty.
+  db.get('SELECT COUNT(*) AS total FROM doctors', (err, row) => {
     if (!err && row.total === 0) {
-      db.run('INSERT INTO velos (marque, couleur, etat) VALUES (?, ?, ?)', ['Btwin', 'Rouge', 0]);
-      db.run('INSERT INTO velos (marque, couleur, etat) VALUES (?, ?, ?)', ['Trek', 'Noir', 0]);
-      db.run('INSERT INTO velos (marque, couleur, etat) VALUES (?, ?, ?)', ['Giant', 'Bleu', 0]);
+      db.run('INSERT INTO doctors (firstName, lastName, specialty, email, phone, available) VALUES (?, ?, ?, ?, ?, ?)', ['John', 'Smith', 'Cardiology', 'john.smith@clinic.com', '55510001', 1]);
+      db.run('INSERT INTO doctors (firstName, lastName, specialty, email, phone, available) VALUES (?, ?, ?, ?, ?, ?)', ['Emily', 'Brown', 'Dentist', 'emily.brown@clinic.com', '55510002', 1]);
+      db.run('INSERT INTO doctors (firstName, lastName, specialty, email, phone, available) VALUES (?, ?, ?, ?, ?, ?)', ['David', 'Wilson', 'General Medicine', 'david.wilson@clinic.com', '55510003', 1]);
     }
   });
 
-  db.get('SELECT COUNT(*) AS total FROM adherents', (err, row) => {
+  db.get('SELECT COUNT(*) AS total FROM patients', (err, row) => {
     if (!err && row.total === 0) {
-      db.run(
-        'INSERT INTO adherents (nom, prenom, cin, email, tel, adresse, nbVeloencours) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        ['Ben Ali', 'Ahmed', 'AA123456', 'ahmed@email.com', '22111222', 'Tunis', 0]
-      );
-      db.run(
-        'INSERT INTO adherents (nom, prenom, cin, email, tel, adresse, nbVeloencours) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        ['Trabelsi', 'Sarra', 'BB123456', 'sarra@email.com', '22333444', 'Sfax', 0]
-      );
+      db.run('INSERT INTO patients (firstName, lastName, cin, email, phone, address, appointmentsCount) VALUES (?, ?, ?, ?, ?, ?, ?)', ['Alice', 'Green', 'AA123456', 'alice@email.com', '55520001', 'Main Street', 0]);
+      db.run('INSERT INTO patients (firstName, lastName, cin, email, phone, address, appointmentsCount) VALUES (?, ?, ?, ?, ?, ?, ?)', ['Mark', 'Taylor', 'BB123456', 'mark@email.com', '55520002', 'Second Street', 0]);
     }
   });
 });

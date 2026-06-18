@@ -9,18 +9,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { NgChartsModule } from 'ng2-charts';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { VeloListComponent } from './components/velo-list/velo-list.component';
-import { VeloCreateComponent } from './components/velo-create/velo-create.component';
-import { AdherentListComponent } from './components/adherent-list/adherent-list.component';
-import { AdherentCreateComponent } from './components/adherent-create/adherent-create.component';
-import { TourListComponent } from './components/tour-list/tour-list.component';
+import { DoctorListComponent } from './components/doctor-list/doctor-list.component';
+import { DoctorCreateComponent } from './components/doctor-create/doctor-create.component';
+import { PatientListComponent } from './components/patient-list/patient-list.component';
+import { PatientCreateComponent } from './components/patient-create/patient-create.component';
+import { AppointmentListComponent } from './components/appointment-list/appointment-list.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
-  declarations: [AppComponent, VeloListComponent, VeloCreateComponent, AdherentListComponent, AdherentCreateComponent, TourListComponent, DashboardComponent],
+  declarations: [AppComponent, DoctorListComponent, DoctorCreateComponent, PatientListComponent, PatientCreateComponent, AppointmentListComponent, DashboardComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatTableModule, MatCardModule, NgChartsModule],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,7 @@
 {
-  "name": "mini-bike-rental-backend",
+  "name": "mini-clinic-backend",
   "version": "1.0.0",
-  "description": "Simple Express SQLite backend for Mini Bike Rental Management App",
+  "description": "Simple Express SQLite backend for Mini Clinic Appointment Management App",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

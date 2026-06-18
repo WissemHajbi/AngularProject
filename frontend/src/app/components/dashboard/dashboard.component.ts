@@ -1,25 +1,22 @@
 import { Component } from '@angular/core';
 import { Chart, ChartDataset, registerables } from 'chart.js';
-
-// This line registers the basic Chart.js chart types (pie, bar, etc.).
+import { DoctorService } from '../../services/doctor.service';
+import { PatientService } from '../../services/patient.service';
+import { AppointmentService } from '../../services/appointment.service';
 Chart.register(...registerables);
-import { VeloService } from '../../services/velo.service';
-import { AdherentService } from '../../services/adherent.service';
-import { TourService } from '../../services/tour.service';
 
 @Component({ selector: 'app-dashboard', templateUrl: './dashboard.component.html' })
 export class DashboardComponent {
-  totalVelos = 0;
-  totalAdherents = 0;
-  totalTours = 0;
-  chartLabels1: string[] = ['Vélos empruntés', 'Vélos disponibles'];
-  chartData1: ChartDataset[] = [{ data: [0, 0], label: 'Etat des vélos' }];
+  totalDoctors = 0;
+  totalPatients = 0;
+  totalAppointments = 0;
+  chartLabels1: string[] = ['Busy Doctors', 'Available Doctors'];
+  chartData1: ChartDataset[] = [{ data: [0, 0], label: 'Doctor Status' }];
   chartLabels2: string[] = [];
-  chartData2: ChartDataset[] = [{ data: [], label: 'Nombre d’emprunts par adhérent' }];
-
-  constructor(private veloService: VeloService, private adherentService: AdherentService, private tourService: TourService) {}
+  chartData2: ChartDataset[] = [{ data: [], label: 'Current appointments by patient' }];
+  constructor(private doctorService: DoctorService, private patientService: PatientService, private appointmentService: AppointmentService) {}
   ngOnInit() { this.loadPieChart(); this.loadBarChart(); this.loadTotals(); }
-  loadPieChart() { this.veloService.chercherTousLesVelos().subscribe(velos => { let empruntes = velos.filter(v => v.etat == 1).length; let disponibles = velos.filter(v => v.etat == 0).length; this.chartData1 = [{ data: [empruntes, disponibles], label: 'Etat des vélos' }]; }); }
-  loadBarChart() { this.adherentService.getAllAdherents().subscribe(adherents => { this.chartLabels2 = adherents.map(a => a.nom); this.chartData2 = [{ data: adherents.map(a => a.nbVeloencours), label: 'Nombre d’emprunts par adhérent' }]; }); }
-  loadTotals() { this.veloService.chercherTousLesVelos().subscribe(v => this.totalVelos = v.length); this.adherentService.getAllAdherents().subscribe(a => this.totalAdherents = a.length); this.tourService.getAllTours().subscribe(t => this.totalTours = t.length); }
+  loadPieChart() { this.doctorService.getAllDoctors().subscribe(doctors => { let busy = doctors.filter(d => d.available == 0).length; let available = doctors.filter(d => d.available == 1).length; this.chartData1 = [{ data: [busy, available], label: 'Doctor Status' }]; }); }
+  loadBarChart() { this.patientService.getAllPatients().subscribe(patients => { this.chartLabels2 = patients.map(p => p.firstName); this.chartData2 = [{ data: patients.map(p => p.appointmentsCount), label: 'Current appointments by patient' }]; }); }
+  loadTotals() { this.doctorService.getAllDoctors().subscribe(d => this.totalDoctors = d.length); this.patientService.getAllPatients().subscribe(p => this.totalPatients = p.length); this.appointmentService.getAllAppointments().subscribe(a => this.totalAppointments = a.length); }
 }

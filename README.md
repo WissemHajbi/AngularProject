@@ -1,18 +1,18 @@
-# Mini Bike Rental Management App
+# Mini Clinic Appointment Management App
 
 A beginner-friendly **Angular + Express.js + SQLite** project for a school Framework Web subject.
 
 ## 1. Project idea
 
-The application manages a small bike rental club:
+The application manages a small clinic:
 
-- **Vélos / Bikes**: `id`, `marque`, `couleur`, `etat`
-  - `etat = 0`: disponible / non emprunté
-  - `etat = 1`: emprunté
-- **Adhérents / Members**: personal information and `nbVeloencours`
-- **Tours / Rentals**: links one bike to one adherent with `date_emp` and `date_retour`
+- **Doctors**: `id`, `firstName`, `lastName`, `specialty`, `email`, `phone`, `available`
+  - `available = 1`: available
+  - `available = 0`: busy
+- **Patients**: `id`, `firstName`, `lastName`, `cin`, `email`, `phone`, `address`, `appointmentsCount`
+- **Appointments**: `id`, `doctorId`, `patientId`, `appointmentDate`, `endDate`
 
-The goal is not a complex professional app. The goal is a clean UI with very simple Angular and Express code that a beginner can explain.
+When an appointment is booked, the doctor becomes busy and the patient appointment count increases. When the appointment is completed, the doctor becomes available again and the patient's current appointment count decreases.
 
 ## 2. Backend setup commands
 
@@ -28,14 +28,22 @@ Backend URL:
 http://localhost:8080/api
 ```
 
-Main backend files:
+Backend organization:
 
-- `backend/database.js`: creates the SQLite database and tables
-- `backend/server.js`: starts Express and connects route files
-- `backend/routes/`: contains simple API route definitions
-- `backend/controllers/`: receives requests and sends responses
-- `backend/services/`: contains simple SQL queries and database logic
-- `backend/package.json`: backend dependencies
+```text
+backend/
+  server.js
+  database.js
+  routes/
+  controllers/
+  services/
+```
+
+Simple flow:
+
+```text
+routes -> controllers -> services -> SQLite database
+```
 
 ## 3. Frontend setup commands
 
@@ -53,112 +61,89 @@ http://localhost:4200
 
 ## 4. Database tables
 
-### velos
+### doctors
 
 ```sql
 id INTEGER PRIMARY KEY AUTOINCREMENT
-marque TEXT
-couleur TEXT
-etat INTEGER
+firstName TEXT
+lastName TEXT
+specialty TEXT
+email TEXT
+phone TEXT
+available INTEGER
 ```
 
-### adherents
+### patients
 
 ```sql
 id INTEGER PRIMARY KEY AUTOINCREMENT
-nom TEXT
-prenom TEXT
+firstName TEXT
+lastName TEXT
 cin TEXT
 email TEXT
-tel TEXT
-adresse TEXT
-nbVeloencours INTEGER DEFAULT 0
+phone TEXT
+address TEXT
+appointmentsCount INTEGER DEFAULT 0
 ```
 
-### tours
+### appointments
 
 ```sql
 id INTEGER PRIMARY KEY AUTOINCREMENT
-veloId INTEGER
-adherentId INTEGER
-date_emp TEXT
-date_retour TEXT
+doctorId INTEGER
+patientId INTEGER
+appointmentDate TEXT
+endDate TEXT
 ```
 
 ## 5. Main Angular patterns used
 
-This project uses classic beginner Angular patterns:
+- Traditional `AppModule`
+- `AppRoutingModule`
+- Model classes: `Doctor`, `Patient`, `Appointment`
+- Services using `HttpClient`
+- `subscribe()` to receive backend data
+- `FormsModule` with `[(ngModel)]`
+- `ReactiveFormsModule` with `FormGroup` in `PatientCreateComponent`
+- Simple HTML tables with `*ngFor`
+- Simple conditions with `*ngIf`
+- `Router.navigate()` after creating data
 
-- `AppModule` and `AppRoutingModule`
-- model classes: `Velo`, `Adherent`, `Tour`
-- services using `HttpClient`
-- `subscribe()` to receive backend results
-- `FormsModule` with `[(ngModel)]` for simple inputs
-- `ReactiveFormsModule` with `FormGroup` in `AdherentCreateComponent`
-- simple routes and `Router.navigate()` after adding data
-- simple HTML tables with `*ngFor` and `*ngIf`
+## 6. API endpoints
 
-## 6. How this maps to exam patterns
+### Doctors
 
-The names are intentionally close to exam-style code:
+- `GET /api/doctors`
+- `GET /api/doctors/available`
+- `GET /api/doctors/:id`
+- `POST /api/doctors`
+- `PUT /api/doctors/:id`
+- `DELETE /api/doctors/:id`
 
-- `chercherTousLesVelos()`
-- `chercherVeloParId()`
-- `getToursByIDAdherant()`
-- `getAllTours()`
-- `ajouterAdherent()`
-- `ajouterAdherant()` in the component
-- `Tour_Velo()`
+### Patients
 
-The services use very direct methods like:
+- `GET /api/patients`
+- `GET /api/patients/:id`
+- `POST /api/patients`
+- `PUT /api/patients/:id`
+- `DELETE /api/patients/:id`
 
-```ts
-return this.http.get<Velo[]>(this.apiUrl);
-```
+### Appointments
 
-The components call services and use `subscribe()`:
-
-```ts
-this.veloService.chercherTousLesVelos().subscribe(data => {
-  this.velos = data;
-});
-```
+- `GET /api/appointments`
+- `GET /api/appointments/patient/:patientId`
+- `POST /api/appointments/book`
+- `PUT /api/appointments/:id/complete`
 
 ## 7. Simple teacher presentation explanation
 
 1. The backend is an Express server running on port `8080`.
-2. The backend uses one SQLite file called `bike_rental.db`.
-3. `database.js` creates three tables: `velos`, `adherents`, and `tours`.
-4. Backend organization is simple: routes → controllers → services → database.
+2. The backend uses one SQLite file called `clinic.db`.
+3. `database.js` creates three tables: `doctors`, `patients`, and `appointments`.
+4. The backend is organized as routes, controllers, and services.
 5. Angular runs on port `4200` and calls the backend using services.
-6. A bike can be available (`etat = 0`) or borrowed (`etat = 1`).
-7. When the user clicks **Faire un tour**, Angular calls `/api/tours/faire-tour`.
-8. The backend checks if the bike is available, creates a tour, changes the bike state to borrowed, and increments the adherent counter.
-9. When the user clicks **Retourner**, the backend sets the return date, makes the bike available again, and decrements the counter.
+6. A doctor can be available (`available = 1`) or busy (`available = 0`).
+7. When the user clicks **Book**, Angular calls `/api/appointments/book`.
+8. The backend checks if the doctor is available, creates an appointment, changes the doctor to busy, and increments the patient's appointment count.
+9. When the user clicks **Complete**, the backend sets the end date, makes the doctor available again, and decrements the patient's current appointment count.
 10. The dashboard shows simple charts using `ng2-charts` and `chart.js`.
-
-## Useful API endpoints
-
-### Vélos
-
-- `GET /api/velos`
-- `GET /api/velos/disponibles`
-- `GET /api/velos/:id`
-- `POST /api/velos`
-- `PUT /api/velos/:id`
-- `DELETE /api/velos/:id`
-
-### Adhérents
-
-- `GET /api/adherents`
-- `GET /api/adherents/:id`
-- `POST /api/adherents`
-- `PUT /api/adherents/:id`
-- `DELETE /api/adherents/:id`
-
-### Tours
-
-- `GET /api/tours`
-- `GET /api/tours/adherent/:adherentId`
-- `POST /api/tours/faire-tour`
-- `PUT /api/tours/:id/retourner`

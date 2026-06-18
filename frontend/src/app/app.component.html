@@ -1,9 +1,12 @@
-<div class="navbar">
+<div class="navbar" *ngIf="authService.isLoggedIn()">
+  <a routerLink="/">Home</a>
   <a routerLink="/doctors">Doctors</a>
-  <a routerLink="/doctors/create">Add Doctor</a>
+  <a routerLink="/doctors/create" *ngIf="authService.isAdmin()">Add Doctor</a>
   <a routerLink="/patients">Patients</a>
-  <a routerLink="/patients/create">Add Patient</a>
+  <a routerLink="/patients/create" *ngIf="authService.isAdmin()">Add Patient</a>
   <a routerLink="/appointments">Appointments</a>
   <a routerLink="/dashboard">Dashboard</a>
+  <span class="nav-user">Role: {{ authService.getUser()?.role }}</span>
+  <button class="logout-btn" (click)="logout()">Logout</button>
 </div>
 <router-outlet></router-outlet>

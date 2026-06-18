@@ -1,0 +1,79 @@
+<div class="home">
+  <section class="hero">
+    <div class="hero-text">
+      <p class="small-title">Mini Clinic Management</p>
+      <h1>Simple appointment management for a small clinic</h1>
+      <p class="hero-description">
+        Manage doctors, patients and appointments with a clean beginner-friendly Angular interface.
+      </p>
+      <div class="hero-actions">
+        <a routerLink="/doctors" class="btn">View Doctors</a>
+        <a routerLink="/patients/create" class="btn secondary">Add Patient</a>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <h3>Clinic Summary</h3>
+      <div class="summary-line">
+        <span>Total Doctors</span>
+        <strong>{{ doctors.length }}</strong>
+      </div>
+      <div class="summary-line">
+        <span>Available Doctors</span>
+        <strong>{{ availableDoctors.length }}</strong>
+      </div>
+      <div class="summary-line">
+        <span>Patients</span>
+        <strong>{{ totalPatients }}</strong>
+      </div>
+      <div class="summary-line">
+        <span>Appointments</span>
+        <strong>{{ totalAppointments }}</strong>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section">
+    <div class="section-header">
+      <div>
+        <p class="small-title">Available now</p>
+        <h2>Available Doctors</h2>
+      </div>
+      <a routerLink="/doctors" class="simple-link">See all doctors</a>
+    </div>
+
+    <div *ngIf="availableDoctors.length == 0" class="empty">
+      No available doctors right now.
+    </div>
+
+    <div class="doctor-grid" *ngIf="availableDoctors.length > 0">
+      <div class="doctor-card" *ngFor="let d of availableDoctors">
+        <div class="avatar">{{ d.firstName.charAt(0) }}{{ d.lastName.charAt(0) }}</div>
+        <h3>Dr. {{ d.firstName }} {{ d.lastName }}</h3>
+        <p class="specialty">{{ d.specialty }}</p>
+        <p>{{ d.email }}</p>
+        <p>{{ d.phone }}</p>
+        <span class="badge badge-ok">Available</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section">
+    <div class="section-header">
+      <div>
+        <p class="small-title">All doctors</p>
+        <h2>Clinic Doctors</h2>
+      </div>
+    </div>
+
+    <div class="doctor-grid">
+      <div class="doctor-card" *ngFor="let d of doctors">
+        <div class="avatar">{{ d.firstName.charAt(0) }}{{ d.lastName.charAt(0) }}</div>
+        <h3>Dr. {{ d.firstName }} {{ d.lastName }}</h3>
+        <p class="specialty">{{ d.specialty }}</p>
+        <span class="badge badge-ok" *ngIf="d.available == 1">Available</span>
+        <span class="badge badge-no" *ngIf="d.available == 0">Busy</span>
+      </div>
+    </div>
+  </section>
+</div>

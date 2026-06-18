@@ -135,7 +135,35 @@ endDate TEXT
 - `POST /api/appointments/book`
 - `PUT /api/appointments/:id/complete`
 
-## 7. Simple teacher presentation explanation
+## 7. Match with exam requirements
+
+This project now matches the class requirements:
+
+- **Angular modular architecture**: components, services, models, routing module, app module.
+- **REST API communication**: Angular services consume the Express API using `HttpClient`.
+- **CRUD module**: Doctors have Create, Read, Update, and Delete in the frontend and backend.
+- **Relation between two tables**: Appointments connect Doctors and Patients using `doctorId` and `patientId`; the appointment page displays doctor and patient names.
+- **Angular forms**: Patient creation uses `FormGroup`; Doctor forms use simple `ngModel`.
+- **Users and roles**: simple login with `admin` and `user` roles.
+- **Access control**: routes are protected with `AuthGuard`; admin-only buttons are hidden for normal users.
+- **Dashboard**: charts show doctor availability and appointments by patient.
+- **Deployment/build**: frontend can be built using `ng build`.
+
+Login accounts:
+
+```text
+Admin: admin / admin123
+User:  user / user123
+```
+
+Build frontend for deployment:
+
+```bash
+cd frontend
+npm run build
+```
+
+## 8. Simple teacher presentation explanation
 
 1. The backend is an Express server running on port `8080`.
 2. The backend uses one SQLite file called `clinic.db`.

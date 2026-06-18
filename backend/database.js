@@ -37,6 +37,13 @@ db.serialize(() => {
     endDate TEXT
   )`);
 
+  db.run(`CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT,
+    password TEXT,
+    role TEXT
+  )`);
+
   // Small demo data inserted only when tables are empty.
   db.get('SELECT COUNT(*) AS total FROM doctors', (err, row) => {
     if (!err && row.total === 0) {
@@ -50,6 +57,13 @@ db.serialize(() => {
     if (!err && row.total === 0) {
       db.run('INSERT INTO patients (firstName, lastName, cin, email, phone, address, appointmentsCount) VALUES (?, ?, ?, ?, ?, ?, ?)', ['Alice', 'Green', 'AA123456', 'alice@email.com', '55520001', 'Main Street', 0]);
       db.run('INSERT INTO patients (firstName, lastName, cin, email, phone, address, appointmentsCount) VALUES (?, ?, ?, ?, ?, ?, ?)', ['Mark', 'Taylor', 'BB123456', 'mark@email.com', '55520002', 'Second Street', 0]);
+    }
+  });
+
+  db.get('SELECT COUNT(*) AS total FROM users', (err, row) => {
+    if (!err && row.total === 0) {
+      db.run('INSERT INTO users (username, password, role) VALUES (?, ?, ?)', ['admin', 'admin123', 'admin']);
+      db.run('INSERT INTO users (username, password, role) VALUES (?, ?, ?)', ['user', 'user123', 'user']);
     }
   });
 });

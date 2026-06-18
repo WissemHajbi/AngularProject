@@ -31,7 +31,10 @@ http://localhost:8080/api
 Main backend files:
 
 - `backend/database.js`: creates the SQLite database and tables
-- `backend/server.js`: contains simple Express routes and SQL queries
+- `backend/server.js`: starts Express and connects route files
+- `backend/routes/`: contains simple API route definitions
+- `backend/controllers/`: receives requests and sends responses
+- `backend/services/`: contains simple SQL queries and database logic
 - `backend/package.json`: backend dependencies
 
 ## 3. Frontend setup commands
@@ -126,12 +129,13 @@ this.veloService.chercherTousLesVelos().subscribe(data => {
 1. The backend is an Express server running on port `8080`.
 2. The backend uses one SQLite file called `bike_rental.db`.
 3. `database.js` creates three tables: `velos`, `adherents`, and `tours`.
-4. Angular runs on port `4200` and calls the backend using services.
-5. A bike can be available (`etat = 0`) or borrowed (`etat = 1`).
-6. When the user clicks **Faire un tour**, Angular calls `/api/tours/faire-tour`.
-7. The backend checks if the bike is available, creates a tour, changes the bike state to borrowed, and increments the adherent counter.
-8. When the user clicks **Retourner**, the backend sets the return date, makes the bike available again, and decrements the counter.
-9. The dashboard shows simple charts using `ng2-charts` and `chart.js`.
+4. Backend organization is simple: routes → controllers → services → database.
+5. Angular runs on port `4200` and calls the backend using services.
+6. A bike can be available (`etat = 0`) or borrowed (`etat = 1`).
+7. When the user clicks **Faire un tour**, Angular calls `/api/tours/faire-tour`.
+8. The backend checks if the bike is available, creates a tour, changes the bike state to borrowed, and increments the adherent counter.
+9. When the user clicks **Retourner**, the backend sets the return date, makes the bike available again, and decrements the counter.
+10. The dashboard shows simple charts using `ng2-charts` and `chart.js`.
 
 ## Useful API endpoints
 

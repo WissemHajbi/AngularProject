@@ -23,7 +23,7 @@ export class DashboardComponent {
     private doctorService: DoctorService,
     private patientService: PatientService,
     private appointmentService: AppointmentService,
-  ) {}
+  ) { }
   ngOnInit() {
     this.loadPieChart();
     this.loadBarChart();
@@ -59,3 +59,4 @@ export class DashboardComponent {
       .subscribe((a) => (this.totalAppointments = a.length));
   }
 }
+

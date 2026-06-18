@@ -18,7 +18,7 @@ export class HomeComponent {
     private doctorService: DoctorService,
     private patientService: PatientService,
     private appointmentService: AppointmentService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadDoctors();

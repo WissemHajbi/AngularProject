@@ -9,7 +9,6 @@ import { DoctorCreateComponent } from "./components/doctor-create/doctor-create.
 import { PatientListComponent } from "./components/patient-list/patient-list.component";
 import { PatientCreateComponent } from "./components/patient-create/patient-create.component";
 import { AppointmentListComponent } from "./components/appointment-list/appointment-list.component";
-import { DashboardComponent } from "./components/dashboard/dashboard.component";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -42,7 +41,10 @@ const routes: Routes = [
   },
   {
     path: "dashboard",
-    component: DashboardComponent,
+    loadChildren: () =>
+      import("./components/dashboard/dashboard.module").then(
+        (m) => m.DashboardModule,
+      ),
     canActivate: [AuthGuard],
   },
 ];

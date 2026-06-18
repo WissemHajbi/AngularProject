@@ -6,9 +6,11 @@ function getAll(callback) {
 function getAvailable(callback) {
   db.all("SELECT * FROM doctors WHERE available = 1", callback);
 }
+
 function getById(id, callback) {
   db.get("SELECT * FROM doctors WHERE id = ?", [id], callback);
 }
+
 function create(doctor, callback) {
   const available = doctor.available === 0 ? 0 : 1;
   db.run(

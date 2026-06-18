@@ -1,0 +1,13 @@
+<div class="page">
+  <h2>Liste des vélos</h2>
+  <div class="search-box">
+    <input type="number" placeholder="Chercher par ID" [(ngModel)]="veloId">
+    <input type="number" placeholder="ID adhérent pour tour" [(ngModel)]="adherentId">
+    <button (click)="chercherVeloParId()">Chercher</button>
+    <button (click)="chercherTousLesVelos()">Tous</button>
+  </div>
+  <div *ngIf="velos.length == 0" class="empty">Aucun vélo trouvé.</div>
+  <div class="table-container" *ngIf="velos.length > 0"><table><tr><th>ID</th><th>Marque</th><th>Couleur</th><th>Etat</th><th>Action</th></tr>
+    <tr *ngFor="let v of velos"><td>{{ v.id }}</td><td>{{ v.marque }}</td><td>{{ v.couleur }}</td><td><span class="badge badge-ok" *ngIf="v.etat == 0">Disponible</span><span class="badge badge-no" *ngIf="v.etat == 1">Emprunté</span></td><td><button *ngIf="v.etat == 0" (click)="Tour_Velo(v.id, adherentId)">Faire un tour</button> <button class="danger" (click)="supprimerVelo(v.id)">Supprimer</button></td></tr>
+  </table></div>
+</div>

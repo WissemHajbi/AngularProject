@@ -1,4 +1,3 @@
-// Service = simple database functions for patients.
 const db = require("../database");
 function getAll(callback) {
   db.all("SELECT * FROM patients", callback);

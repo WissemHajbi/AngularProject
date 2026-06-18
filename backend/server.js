@@ -1,4 +1,3 @@
-// Main Express file. Simple flow: routes -> controllers -> services -> SQLite database.
 const express = require("express");
 const cors = require("cors");
 const doctorRoutes = require("./routes/doctor.routes");

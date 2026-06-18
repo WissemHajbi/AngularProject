@@ -1,4 +1,3 @@
-// Service for appointments. It contains simple business logic.
 const db = require("../database");
 function today() {
   return new Date().toISOString().slice(0, 10);

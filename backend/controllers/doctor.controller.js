@@ -1,4 +1,3 @@
-// Controller = receives HTTP requests and sends HTTP responses.
 const doctorService = require("../services/doctor.service");
 function getAllDoctors(req, res) {
   doctorService.getAll((err, rows) =>

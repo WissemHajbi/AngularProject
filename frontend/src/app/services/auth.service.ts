@@ -2,8 +2,6 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 
-// Simple AuthService for the exam requirement: user/admin roles.
-// It stores the connected user in localStorage.
 @Injectable({ providedIn: "root" })
 export class AuthService {
   private apiUrl = "http://localhost:8080/api/auth";

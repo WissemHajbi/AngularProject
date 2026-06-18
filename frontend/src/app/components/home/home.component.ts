@@ -26,7 +26,6 @@ export class HomeComponent {
   }
 
   loadDoctors() {
-    // subscribe receives the doctors sent by the backend.
     this.doctorService.getAllDoctors().subscribe((data) => {
       this.doctors = data;
     });

@@ -14,7 +14,6 @@ export class PatientCreateComponent {
     private patientService: PatientService,
     private router: Router,
   ) {
-    // FormGroup groups all form inputs in one object.
     this.form = this.fb.group({
       firstName: [""],
       lastName: [""],

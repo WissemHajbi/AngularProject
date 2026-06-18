@@ -2,8 +2,6 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Doctor } from "../models/doctor";
 
-// A service contains methods that call the backend API.
-// HttpClient is Angular's tool for sending GET, POST, PUT, DELETE requests.
 @Injectable({ providedIn: "root" })
 export class DoctorService {
   private apiUrl = "http://localhost:8080/api/doctors";

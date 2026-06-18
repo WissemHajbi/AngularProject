@@ -1,4 +1,3 @@
-// A model class describes the shape of a doctor object used in Angular.
 export class Doctor {
   id!: number;
   firstName!: string;

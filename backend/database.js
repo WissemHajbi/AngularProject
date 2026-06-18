@@ -1,5 +1,3 @@
-// database.js
-// Creates one simple SQLite database file for the clinic project.
 
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("./clinic.db", (err) => {
@@ -44,7 +42,6 @@ db.serialize(() => {
     role TEXT
   )`);
 
-  // Small demo data inserted only when tables are empty.
   db.get("SELECT COUNT(*) AS total FROM doctors", (err, row) => {
     if (!err && row.total === 0) {
       db.run(
